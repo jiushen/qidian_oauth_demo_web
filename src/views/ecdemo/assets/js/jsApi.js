@@ -1,13 +1,15 @@
+import eventBus from '../../../../plugins/eventBus'
 export default {
     fetchjsApi(){
         let id = 0
-        var eventName = 'AIOActivate'; 
+        var eventName = 'AIOCreate'; 
         var handler = function (result) {
             let code = result.code,
                 msg = result.msg,
                 data = result.data;
                 console.log(code,msg,data,"result")
                 id = data.CID
+                eventBus.$emit('cid', id);
         };
          qidian.registerEvent(
           {

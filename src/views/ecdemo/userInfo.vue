@@ -42,6 +42,7 @@
 import { openapi } from '@/api/user.js'
 // import { getToken } from '@/plugins/auth';
 import jsApi from './assets/js/jsApi.js';
+import eventBus from '../../plugins/eventBus'
 
 export default {
     name:'userInfo',
@@ -52,20 +53,27 @@ export default {
             uid:1
         }
     },
+    created() {
+        jsApi.fetchjsApi();
+    },
     mounted() {
-        this.fetchUser()
+        eventBus.$on('cid', (id) => {
+            console.log('cid-------', id);
+            this.fetchUser(id);
+        })
     },
     methods: {
-        fetchUser(){
+        fetchUser(id){
             // let access_token = this.fetchToken()
-            this.uid = jsApi.fetchjsApi() === 0 ? 1:jsApi.fetchjsApi();
+            // this.uid = jsApi.fetchjsApi() === 0 ? 1:jsApi.fetchjsApi();
             let params = {
                 // access_token: access_token,
                 // code: 1,
-                uid:this.uid
+                uid:id
             }
             openapi(params).then(res => {
-                this.shipObj = res.data[0]
+                this.shipObj = res.data[0] || {};
+                console.log('shipObj-----', this.shipObj);
                 this.loading = false
             }).catch((error) => {
                 this.loading = false
