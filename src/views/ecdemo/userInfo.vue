@@ -58,7 +58,7 @@ export default {
     methods: {
         fetchUser(){
             // let access_token = this.fetchToken()
-            this.uid = jsApi.fetchjsApi()
+            this.uid = jsApi.fetchjsApi() === 0 ? 1:jsApi.fetchjsApi();
             let params = {
                 // access_token: access_token,
                 // code: 1,
