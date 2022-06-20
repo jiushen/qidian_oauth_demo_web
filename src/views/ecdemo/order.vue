@@ -41,6 +41,7 @@
 <script>
   import { orderList} from '@/api/user'
   import jsApi from './assets/js/jsApi.js';
+  import eventBus from '../../plugins/eventBus'
   export default {
     name: 'ecsettingOrder',
     // components: { TabFilter },
@@ -51,8 +52,7 @@
         loading: false,
         currentPage: 1, // 当前第几页
         maxPage: 1,    // 总共多少页
-        count: 5,
-        uid:1
+        count: 5
       }
     },
     computed: {
@@ -62,7 +62,7 @@
           page: this.currentPage,
           index: 0,
           sort: '-created_at',
-          uid: 1
+          uid:1
         }
       },
       disabled () {
@@ -70,53 +70,61 @@
       }
     },
     methods: {
-      // 初始化数据
-      initData() {
-        if (this.currentPage > this.maxPage) {
-          return false;
-        }
-        this.loading = true;
-        if(this.keyWords !== '' ){
-            let keyWords = {keyword: this.keyWords}
-            this.queryParams = Object.assign(this.queryParams, keyWords)
-        }
-        this.uid = jsApi.fetchjsApi()
-        orderList(this.queryParams).then(res => {
-            this.loading = false;
-            this.maxPage = Math.ceil(res.total / this.count);
-            let arr = res.data;
-            if (this.currentPage > 1) {
-                this.listData = this.listData.concat(arr)
-            }
-            else {
-                this.listData = arr;
-            }
-        }).catch((err) => {
-            this.loading = false
-            this.$message.error(err.message || "加载错误");
-        })
-      },
-      loadList() {
-        this.currentPage ++;
-        this.initData();
-      },
-      fetchOrders(){
-          this.currentPage = 1
-          this.initData()
-      },
-      // 跳转详情
-      handleEdit(id) {
-        console.log('id', id);
-      },
+        apiData(){
+            eventBus.$on('cid', (id) => {
+                this.initData(id);
+            })
+        },
+        // 初始化数据
+        initData(id) {
+          if (this.currentPage > this.maxPage) {
+            return false;
+          }
+          this.loading = true;
+          if(this.keyWords !== '' ){
+              let keyWords = {keyword: this.keyWords}
+              this.queryParams = Object.assign(this.queryParams, keyWords)
+          }
+          this.queryParams.uid = id
+          orderList(this.queryParams).then(res => {
+              this.loading = false;
+              this.maxPage = Math.ceil(res.total / this.count);
+              let arr = res.data;
+              if (this.currentPage > 1) {
+                  this.listData = this.listData.concat(arr)
+              }
+              else {
+                  this.listData = arr;
+              }
+          }).catch((err) => {
+              this.loading = false
+              this.$message.error(err.message || "加载错误");
+          })
+        },
+        loadList() {
+            this.currentPage ++;
+            this.apiData()
+        },
+        fetchOrders(){
+            this.currentPage = 1
+            this.apiData()
+        },
+        // 跳转详情
+        handleEdit(id) {
+          console.log('id', id);
+        },
 
-      // 发送
-      sendData(id) {
-        console.log('id', id);
-      }
+        // 发送
+        sendData(id) {
+          console.log('id', id);
+        }
+    },
+    created() {
+        jsApi.fetchjsApi();
     },
     mounted() {
-      this.initData();
-    }
+        this.apiData()
+    },
   }
 </script>
 

@@ -12,17 +12,22 @@
                     <div>{{shipObj.gender_show}}</div>
                 </div>
                 <div class="member-ship-item">
-                    <div class="information ship-name">余额</div>
-                    <div>{{shipObj.money}}</div>
+                    <div class="information ship-name">购买次数</div>
+                    <div>{{shipObj.buy_count}}</div>
+                </div>
+                <div class="member-ship-item">
+                    <div class="information ship-name">最近购买</div>
+                    <div>{{shipObj.buy_lastes}}</div>
+                </div>
+                <div class="member-ship-item">
+                    <div class="information ship-name">客单价</div>
+                    <div>¥{{shipObj.avr_order_price}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
                     <div>{{shipObj.created_at}}</div>
                 </div>
-                <div class="member-ship-item">
-                    <div class="information ship-name">最后登录时间</div>
-                    <div>{{shipObj.updated_at}}</div>
-                </div>
+
                 <div class="member-ship-item">
                     <div class="information ship-name">状态</div>
                     <div>{{shipObj.state_show}}</div>
@@ -30,6 +35,10 @@
                 <div class="member-ship-item">
                     <div class="information ship-name">邮箱地址</div>
                     <div>{{shipObj.email? 'shipObj.email':'无'}}</div>
+                </div>
+                <div class="member-ship-item">
+                    <div class="information ship-name">优惠券</div>
+                    <div>{{shipObj.coupon_count}}张</div>
                 </div>
             </div>
 
@@ -40,7 +49,6 @@
 
 <script>
 import { openapi } from '@/api/user.js'
-// import { getToken } from '@/plugins/auth';
 import jsApi from './assets/js/jsApi.js';
 import eventBus from '../../plugins/eventBus'
 
@@ -58,34 +66,23 @@ export default {
     },
     mounted() {
         eventBus.$on('cid', (id) => {
-            console.log('cid-------', id);
             this.fetchUser(id);
         })
     },
     methods: {
         fetchUser(id){
-            // let access_token = this.fetchToken()
-            // this.uid = jsApi.fetchjsApi() === 0 ? 1:jsApi.fetchjsApi();
             let params = {
-                // access_token: access_token,
-                // code: 1,
                 uid:id
             }
             openapi(params).then(res => {
                 this.shipObj = res.data[0] || {};
-                console.log('shipObj-----', this.shipObj);
                 this.loading = false
             }).catch((error) => {
                 this.loading = false
                 this.$message.error(error.message || "加载错误");
             })
 
-        },
-        // fetchToken(){
-        //     let token= getToken('token')
-        //     return token
-        // }
-
+        }
     }
 }
 </script>
