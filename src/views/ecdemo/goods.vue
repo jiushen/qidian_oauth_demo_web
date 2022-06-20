@@ -131,30 +131,31 @@ export default {
             eventBus.$on('cid', (id) => {
                 this.fetchGoodsList(id);
             })
+            // this.fetchGoodsList();
         },
         // 获取列表接口
         fetchGoodsList(id){
             if(this.pageNum === 1){
                 this.list = []
             }
-            let listType;
+            let type;
             if(this.selectedSelector === 1){
-                listType = 1
+                type = 'history'
             }
             if(this.selectedSelector === 2){
-                listType = 2
+                type = 'recommend'
             }
             if(this.selectedSelector === 3){
-                listType = 0
+                type = ''
             }
-            this.uid = jsApi.fetchjsApi()
             let params={
                 limit: this.pageSize,
                 page: this.pageNum,
-                keyword: this.keyWords,
+                keywords: this.keyWords,
                 uid: id,
                 sort: '-created_at',
-                listType: listType
+                type: type,
+                index: 0
             }
             goosList(params).then(res => {
                 this.list = this.list.concat(res.data)
@@ -163,7 +164,7 @@ export default {
                 if(this.selectedSelector === 1){
                     this.currentItem = [this.list[0]]
                 } 
-                this.num = parseInt(this.pageTotal / this.pageSize)
+                this.num = Math.ceil(this.pageTotal / this.pageSize)
             }).catch((error) => {
                 this.$message.error(error.message || "加载错误");
             })
