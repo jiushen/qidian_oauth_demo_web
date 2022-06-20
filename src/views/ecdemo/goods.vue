@@ -60,6 +60,7 @@ import TabFilter from './components/tab-filter.vue';
 import GoodsItem from './components/goods-item.vue';
 import { goosList } from '@/api/good.js'
 import jsApi from './assets/js/jsApi.js';
+import eventBus from '../../plugins/eventBus'
 
 export default {
     components: { TabFilter,GoodsItem },
@@ -84,13 +85,9 @@ export default {
             pageSize:10, //每页数量
             pageNum: 1 ,//当前页
             pageTotal: 0,//总条数
-            num: 0,
-            uid:1
+            num: 0
 
         }
-    },
-    mounted() {
-        this.fetchGoodsList()
     },
     computed:{
         titleDesc(){
@@ -106,6 +103,12 @@ export default {
             return this.iconShow ? 'el-icon-arrow-down':'el-icon-arrow-up'
         },      
     },
+    created() {
+        jsApi.fetchjsApi();
+    },
+    mounted() {
+        this.apiData()
+    },
     methods: {
         selectorChange(val){
             this.selectedSelector = val
@@ -113,7 +116,7 @@ export default {
             this.pageNum = 1
             this.goodsIds.checkedList = []
             this.goodsIds.checked = []
-            this.fetchGoodsList()
+            this.apiData()
 
         },
         iconChange(){
@@ -122,10 +125,15 @@ export default {
         fetchGoods(value){
             this.keyWords = value
             this.pageNum = 1
-            this.fetchGoodsList(this.keyWords)
+            this.apiData()
+        },
+        apiData(){
+            eventBus.$on('cid', (id) => {
+                this.fetchGoodsList(id);
+            })
         },
         // 获取列表接口
-        fetchGoodsList(value){
+        fetchGoodsList(id){
             if(this.pageNum === 1){
                 this.list = []
             }
@@ -143,8 +151,8 @@ export default {
             let params={
                 limit: this.pageSize,
                 page: this.pageNum,
-                keyword: value,
-                uid: this.uid,
+                keyword: this.keyWords,
+                uid: id,
                 sort: '-created_at',
                 listType: listType
             }
@@ -172,13 +180,11 @@ export default {
         },
         //发送
         send(arr){
-          console.log(arr.checked)
-          
-
+            console.log(arr.checked)
         },
         changePages(value){
             this.pageNum = value
-            this.fetchGoodsList()   
+            this.apiData()   
         }
 
     }
