@@ -27,9 +27,11 @@
                     <div class="money">¥{{item.total}}</div>
                     <div class="operation">
                         <span>共{{item.goods_list.length}}件</span>
-                        <a href="javascript:void(0)" @click="sendData(item.id)">
-                          <img src="./assets/icons/normal.png"/>
-                        </a>
+                        <el-tooltip class="item" effect="light" content="直接发送" placement="bottom-start">
+                            <a href="javascript:void(0)" @click="sendData(item.id)">
+                              <img src="./assets/icons/normal.png"/>
+                            </a>
+                        </el-tooltip>
                     </div>
                 </div>
             </div>
