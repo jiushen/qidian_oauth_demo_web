@@ -13,7 +13,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">购买次数</div>
-                    <div>{{shipObj.buy_count}}</div>
+                    <div>{{shipObj.buy_count? shipObj.buy_count:0}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">最近购买</div>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">客单价</div>
-                    <div>¥{{shipObj.avr_order_price}}</div>
+                    <div>¥{{shipObj.avr_order_price? shipObj.avr_order_price : 0}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
@@ -34,11 +34,11 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">邮箱地址</div>
-                    <div>{{shipObj.email? 'shipObj.email':'无'}}</div>
+                    <div>{{shipObj.email? shipObj.email:'无'}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">优惠券</div>
-                    <div>{{shipObj.coupon_count}}张</div>
+                    <div>{{shipObj.coupon_count? shipObj.coupon_count:0 }}张</div>
                 </div>
             </div>
 
@@ -113,7 +113,7 @@ export default {
                     color: rgba(138,147,169,1);
                 }
                 .ship-name{
-                    width:10%;
+                    width:12%;
                     min-width:52px;
                     margin-right:5px;
                 }

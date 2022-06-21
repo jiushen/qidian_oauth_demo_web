@@ -62,7 +62,8 @@
           page: this.currentPage,
           index: 0,
           sort: '-created_at',
-          uid:1
+          uid:1,
+          keywords:''
         }
       },
       disabled () {
@@ -81,20 +82,19 @@
             return false;
           }
           this.loading = true;
-          if(this.keyWords !== '' ){
-              let keyWords = {keyword: this.keyWords}
-              this.queryParams = Object.assign(this.queryParams, keyWords)
-          }
+          this.queryParams.keywords = this.keyWords
           this.queryParams.uid = id
           orderList(this.queryParams).then(res => {
-              this.loading = false;
-              this.maxPage = Math.ceil(res.total / this.count);
-              let arr = res.data;
-              if (this.currentPage > 1) {
-                  this.listData = this.listData.concat(arr)
-              }
-              else {
-                  this.listData = arr;
+              if(res.message !== null){
+                  this.loading = false;
+                  this.maxPage = Math.ceil(res.total / this.count);
+                  let arr = res.data;
+                  if (this.currentPage > 1) {
+                      this.listData = this.listData.concat(arr)
+                  }
+                  else {
+                      this.listData = arr;
+                  }
               }
           }).catch((err) => {
               this.loading = false

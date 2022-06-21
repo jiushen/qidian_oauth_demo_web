@@ -23,6 +23,7 @@
                         <p class="list-content-title">当前咨询</p>
                         <div class="footprint">
                             <goods-item 
+                                v-if="list.length>0"
                                 :goodsList="currentItem" 
                                 :selectedSelector="selectedSelector" 
                                 :checkList="goodsIds.checked"
@@ -116,8 +117,6 @@ export default {
             this.pageNum = 1
             this.goodsIds.checkedList = []
             this.goodsIds.checked = []
-            this.apiData()
-
         },
         iconChange(){
             this.iconShow = !this.iconShow
@@ -158,13 +157,15 @@ export default {
                 index: 0
             }
             goosList(params).then(res => {
-                this.list = this.list.concat(res.data)
-                this.list = this.handleArray(this.list)
-                this.pageTotal = res.total
-                if(this.selectedSelector === 1){
-                    this.currentItem = [this.list[0]]
-                } 
-                this.num = Math.ceil(this.pageTotal / this.pageSize)
+                if(res.message!==null){
+                    this.list = this.list.concat(res.data)
+                    this.list = this.handleArray(this.list)
+                    this.pageTotal = res.total
+                    if(this.selectedSelector === 1){
+                        this.currentItem = [this.list[0]]
+                    } 
+                    this.num = Math.ceil(this.pageTotal / this.pageSize)
+                }
             }).catch((error) => {
                 this.$message.error(error.message || "加载错误");
             })
