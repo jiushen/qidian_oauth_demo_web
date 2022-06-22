@@ -109,6 +109,7 @@
         },
         fetchOrders(){
             this.currentPage = 1
+            this.listData = []
             this.apiData()
         },
         // 跳转详情
