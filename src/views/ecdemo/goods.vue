@@ -117,6 +117,7 @@ export default {
             this.pageNum = 1
             this.goodsIds.checkedList = []
             this.goodsIds.checked = []
+            this.apiData()
         },
         iconChange(){
             this.iconShow = !this.iconShow
