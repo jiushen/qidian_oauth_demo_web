@@ -54,7 +54,8 @@
         loading: false,
         currentPage: 1, // 当前第几页
         maxPage: 1,    // 总共多少页
-        count: 5
+        count: 5,
+        uid:1,
       }
     },
     computed: {
@@ -73,19 +74,14 @@
       }
     },
     methods: {
-        apiData(){
-            eventBus.$on('cid', (id) => {
-                this.initData(id);
-            })
-        },
         // 初始化数据
-        initData(id) {
+        initData() {
           if (this.currentPage > this.maxPage) {
             return false;
           }
           this.loading = true;
           this.queryParams.keywords = this.keyWords
-          this.queryParams.uid = id
+          this.queryParams.uid = this.uid
           orderList(this.queryParams).then(res => {
               if(res.message !== null){
                   this.loading = false;
@@ -105,12 +101,12 @@
         },
         loadList() {
             this.currentPage ++;
-            this.apiData()
+            this.initData()
         },
         fetchOrders(){
             this.currentPage = 1
             this.listData = []
-            this.apiData()
+            this.initData()
         },
         // 跳转详情
         handleEdit(id) {
@@ -126,7 +122,11 @@
         jsApi.fetchjsApi();
     },
     mounted() {
-        this.apiData()
+        eventBus.$on('cid', (id) => {
+            console.log(id,"id===============")
+            this.uid = id
+            this.initData();
+        })
     },
   }
 </script>

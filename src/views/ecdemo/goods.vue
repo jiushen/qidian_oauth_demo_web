@@ -86,7 +86,8 @@ export default {
             pageSize:10, //每页数量
             pageNum: 1 ,//当前页
             pageTotal: 0,//总条数
-            num: 0
+            num: 0,
+            uid:1,
 
         }
     },
@@ -108,7 +109,11 @@ export default {
         jsApi.fetchjsApi();
     },
     mounted() {
-        this.apiData()
+        eventBus.$on('cid', (id) => {
+            console.log(id,"id------222222")
+            this.uid = id
+            this.fetchGoodsList();
+        })
     },
     methods: {
         selectorChange(val){
@@ -117,7 +122,7 @@ export default {
             this.pageNum = 1
             this.goodsIds.checkedList = []
             this.goodsIds.checked = []
-            this.apiData()
+            this.fetchGoodsList()
         },
         iconChange(){
             this.iconShow = !this.iconShow
@@ -125,16 +130,10 @@ export default {
         fetchGoods(value){
             this.keyWords = value
             this.pageNum = 1
-            this.apiData()
-        },
-        apiData(){
-            eventBus.$on('cid', (id) => {
-                this.fetchGoodsList(id);
-            })
-            // this.fetchGoodsList();
+            this.fetchGoodsList()
         },
         // 获取列表接口
-        fetchGoodsList(id){
+        fetchGoodsList(){
             if(this.pageNum === 1){
                 this.list = []
             }
@@ -152,13 +151,13 @@ export default {
                 limit: this.pageSize,
                 page: this.pageNum,
                 keywords: this.keyWords,
-                uid: id,
+                uid: this.uid,
                 sort: '-created_at',
                 type: type,
                 index: 0
             }
             goosList(params).then(res => {
-                if(res.message!==null){
+                if(res.message!== null){
                     this.list = this.list.concat(res.data)
                     this.list = this.handleArray(this.list)
                     this.pageTotal = res.total
@@ -187,7 +186,7 @@ export default {
         },
         changePages(value){
             this.pageNum = value
-            this.apiData()   
+            this.fetchGoodsList()   
         }
 
     }
