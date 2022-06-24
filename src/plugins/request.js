@@ -8,7 +8,12 @@ const service = axios.create({
 })
 service.interceptors.request.use(
   config => {
-    config.url = '/api/v1/app/' + config.url;
+    if(config.url.includes('https://api.qidian.qq.com')){
+        config.url = config.url
+    }
+    else{
+        config.url = '/proxyApi/api/v1/app/' + config.url;
+    }
     config.headers['apply-secret'] = process.env.PROJECT_KEY
     config.headers['Accept'] = 'application/json'
     // config.headers['Authorization'] = getToken('token_type') + ' ' + getToken('token')

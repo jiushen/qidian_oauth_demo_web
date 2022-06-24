@@ -56,7 +56,7 @@
         currentPage: 1, // 当前第几页
         maxPage: 1,    // 总共多少页
         count: 5,
-        uid:1,
+        uid: 1,
         bid:1
         
       }
@@ -68,8 +68,8 @@
           page: this.currentPage,
           index: 0,
           sort: '-created_at',
-          uid:1,
-          keywords:''
+          uid: this.uid,
+          keywords:this.keyWords
         }
       },
       disabled () {
@@ -83,8 +83,6 @@
             return false;
           }
           this.loading = true;
-          this.queryParams.keywords = this.keyWords
-          this.queryParams.uid = this.uid
           orderList(this.queryParams).then(res => {
               if(res.message !== null){
                   this.loading = false;
