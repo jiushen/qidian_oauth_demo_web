@@ -10,6 +10,7 @@ export default {
                 console.log(code,msg,data,"result")
                 id = data.CID
                 eventBus.$emit('cid', id);
+                eventBus.$emit('bid', data.BID);
         };
          qidian.registerEvent(
           {

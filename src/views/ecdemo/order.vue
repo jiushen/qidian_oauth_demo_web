@@ -28,7 +28,7 @@
                     <div class="operation">
                         <span>共{{item.goods_list.length}}件</span>
                         <el-tooltip class="item" effect="light" content="直接发送" placement="bottom-start">
-                            <a href="javascript:void(0)" @click="sendData(item.id)">
+                            <a href="javascript:void(0)" @click="sendData(item)">
                               <img src="./assets/icons/normal.png"/>
                             </a>
                         </el-tooltip>
@@ -44,6 +44,7 @@
   import { orderList} from '@/api/user'
   import jsApi from './assets/js/jsApi.js';
   import eventBus from '../../plugins/eventBus'
+  import request from '@/plugins/request'
   export default {
     name: 'ecsettingOrder',
     // components: { TabFilter },
@@ -56,6 +57,8 @@
         maxPage: 1,    // 总共多少页
         count: 5,
         uid:1,
+        bid:1
+        
       }
     },
     computed: {
@@ -114,9 +117,36 @@
         },
 
         // 发送
-        sendData(id) {
-          console.log('id', id);
-        }
+        sendData(value) {
+          console.log('value', value); 
+          let arr = [];
+          value.goods_list.map(i => {
+              let arrObj = {
+                  title: i.name,
+                  picurl: i.img,
+                  url: "",
+                  description: ""
+              }
+              arr.push(arrObj)
+          })            
+
+          let params={
+              fromuser: this.bid,
+              touser: this.uid,
+              msgtype: "news",
+              news: {
+                articles: arr
+              }
+          }
+          console.log(params,"params")
+          request({
+              url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
+              method: 'post',
+              params: params
+            }).then(res=>{
+              console.log(res,"res")
+            })
+          }
     },
     created() {
         jsApi.fetchjsApi();
@@ -126,7 +156,12 @@
             console.log(id,"id===============")
             this.uid = id
             this.initData();
-        })
+        });
+        eventBus.$on('bid', (id) => {
+            console.log(id,"bid===============")
+            this.bid = id
+        });
+
     },
   }
 </script>

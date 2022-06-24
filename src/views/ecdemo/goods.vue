@@ -62,6 +62,7 @@ import GoodsItem from './components/goods-item.vue';
 import { goosList } from '@/api/good.js'
 import jsApi from './assets/js/jsApi.js';
 import eventBus from '../../plugins/eventBus'
+import request from '@/plugins/request'
 
 export default {
     components: { TabFilter,GoodsItem },
@@ -88,6 +89,7 @@ export default {
             pageTotal: 0,//总条数
             num: 0,
             uid:1,
+            bid:1
 
         }
     },
@@ -113,7 +115,11 @@ export default {
             console.log(id,"id------222222")
             this.uid = id
             this.fetchGoodsList();
-        })
+        });
+        eventBus.$on('bid', (id) => {
+            console.log(id,"bid===============")
+            this.bid = id
+        });
     },
     methods: {
         selectorChange(val){
@@ -181,8 +187,39 @@ export default {
             this.goodsIds.length = value.length
         },
         //发送
-        send(arr){
-            console.log(arr.checked)
+        send(value){
+            console.log(value,this.list)
+            this.itemObj = {}
+            this.list.forEach(i => {
+                if(value.checked[0] === i.id) {
+                    this.itemObj = i
+                    return
+                }
+            });    
+            let obj = {
+                title: this.itemObj.name ,
+                picurl: this.itemObj.resources.img,
+                url: "",
+                description: ""
+            }
+
+            let params={
+                fromuser: this.bid,
+                touser: this.uid,
+                msgtype: "news",
+                news: {
+                  articles:obj
+                }
+            }
+            console.log(params,"params")
+            request({
+                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
+                method: 'post',
+                params: params
+            }).then(res=>{
+                console.log(res)
+            })
+
         },
         changePages(value){
             this.pageNum = value
