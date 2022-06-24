@@ -59,7 +59,7 @@
 <script>
 import TabFilter from './components/tab-filter.vue';
 import GoodsItem from './components/goods-item.vue';
-import { goosList } from '@/api/good.js'
+import { goosList, getConsultList} from '@/api/good.js'
 import jsApi from './assets/js/jsApi.js';
 import eventBus from '../../plugins/eventBus'
 import request from '@/plugins/request'
@@ -143,6 +143,22 @@ export default {
             if(this.pageNum === 1){
                 this.list = []
             }
+            if(this.selectedSelector === 1){
+                let params = {
+                    limit: 10,
+                    page: 1,
+                    uid: this.uid,
+                    sort: '-created_at',
+                    index: 0
+                }
+                getConsultList(params).then(res => {
+                    if(res.message!== null){
+                        this.currentItem = res
+                    }
+                }).catch((error) => {
+                    this.$message.error(error.message || "加载错误");
+                })
+            }
             let type;
             if(this.selectedSelector === 1){
                 type = 'history'
@@ -167,9 +183,6 @@ export default {
                     this.list = this.list.concat(res.data)
                     this.list = this.handleArray(this.list)
                     this.pageTotal = res.total
-                    if(this.selectedSelector === 1){
-                        this.currentItem = [this.list[0]]
-                    } 
                     this.num = Math.ceil(this.pageTotal / this.pageSize)
                 }
             }).catch((error) => {
@@ -213,7 +226,7 @@ export default {
             }
             console.log(params,"params")
             request({
-                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
+                url: 'sendToC',
                 method: 'post',
                 params: params
             }).then(res=>{

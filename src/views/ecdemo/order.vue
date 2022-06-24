@@ -138,7 +138,7 @@
           }
           console.log(params,"params")
           request({
-              url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
+              url: 'sendToC',
               method: 'post',
               params: params
             }).then(res=>{

@@ -6,3 +6,10 @@ export function goosList(query) {
     params: query
   })
 }
+export function getConsultList(query) {
+  return request({
+    url: 'getConsultGoods',
+    method: 'GET',
+    params: query
+  })
+}
