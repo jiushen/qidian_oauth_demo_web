@@ -201,7 +201,7 @@ export default {
         //发送
         send(value){
             this.itemObj = {}
-            if(value.checked[0] === this.currentItem[0].id){
+            if(this.selectedSelector === 1 && value.checked[0] === this.currentItem[0].id){
                 this.itemObj = this.currentItem[0]
             }else{
                 this.list.forEach(i => {
@@ -230,7 +230,7 @@ export default {
             request({
                 url: 'sendToC',
                 method: 'post',
-                data: params ,
+                data: JSON.parse(JSON.stringify(params)) ,
                 headers: {
                   'Content-Type': 'application/json'
                 }

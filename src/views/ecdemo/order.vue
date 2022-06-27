@@ -109,10 +109,11 @@
           })
         },
         loadList() {
-            if (this.currentPage < this.maxPage) {
-                this.currentPage ++;
-                this.initData()
+            this.currentPage ++;
+            if (this.currentPage > this.maxPage) {
+                return 
             }
+            this.initData()
 
         },
         fetchOrders(){
@@ -150,7 +151,7 @@
           request({
               url: 'sendToC',
               method: 'post',
-              data: params,
+              data: JSON.parse(JSON.stringify(params)),
               headers: {
                 'Content-Type': 'application/json'
               }
