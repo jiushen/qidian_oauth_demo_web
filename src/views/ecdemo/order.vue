@@ -79,10 +79,18 @@
     methods: {
         // 初始化数据
         initData() {
-          if (this.currentPage > this.maxPage) {
-            return false;
-          }
+          // if (this.currentPage > this.maxPage) {
+          //   return false;
+          // }
           this.loading = true;
+          // let params={
+          //     limit: this.count,
+          //     page: this.currentPage,
+          //     index: 0,
+          //     sort: '-created_at',
+          //     uid: this.uid,
+          //     keywords:this.keyWords
+          // }
           orderList(this.queryParams).then(res => {
               if(res.message !== null){
                   this.loading = false;
@@ -101,8 +109,11 @@
           })
         },
         loadList() {
-            this.currentPage ++;
-            this.initData()
+            if (this.currentPage < this.maxPage) {
+                this.currentPage ++;
+                this.initData()
+            }
+
         },
         fetchOrders(){
             this.currentPage = 1
@@ -128,7 +139,7 @@
               arr.push(arrObj)
           })            
 
-          let params={
+          let params = {
               fromuser: this.bid,
               touser: this.uid,
               msgtype: "news",
@@ -136,11 +147,13 @@
                 articles: arr
               }
           }
-          console.log(params,"params")
           request({
               url: 'sendToC',
               method: 'post',
-              params: params
+              data: JSON.stringify(params),
+              headers: {
+                'Content-Type': 'application/json'
+              }
             }).then(res=>{
               console.log(res,"res")
             })

@@ -23,7 +23,6 @@
                         <p class="list-content-title">当前咨询</p>
                         <div class="footprint">
                             <goods-item 
-                                v-if="list.length>0"
                                 :goodsList="currentItem" 
                                 :selectedSelector="selectedSelector" 
                                 :checkList="goodsIds.checked"
@@ -153,7 +152,7 @@ export default {
                 }
                 getConsultList(params).then(res => {
                     if(res.message!== null){
-                        this.currentItem = res
+                        this.currentItem = res.data
                     }
                 }).catch((error) => {
                     this.$message.error(error.message || "加载错误");
@@ -201,34 +200,40 @@ export default {
         },
         //发送
         send(value){
-            console.log(value,this.list)
             this.itemObj = {}
-            this.list.forEach(i => {
-                if(value.checked[0] === i.id) {
-                    this.itemObj = i
-                    return
-                }
-            });    
+            if(value.checked[0] === this.currentItem[0].id){
+                this.itemObj = this.currentItem[0]
+            }else{
+                this.list.forEach(i => {
+                    if(value.checked[0] === i.id) {
+                        this.itemObj = i
+                        return
+                    }
+                });
+            }  
+            let arr = [] 
             let obj = {
                 title: this.itemObj.name ,
                 picurl: this.itemObj.resources.img,
                 url: "",
                 description: ""
             }
-
+            arr.push(obj)
             let params={
                 fromuser: this.bid,
                 touser: this.uid,
                 msgtype: "news",
                 news: {
-                  articles:obj
+                  articles:arr
                 }
             }
-            console.log(params,"params")
             request({
                 url: 'sendToC',
                 method: 'post',
-                params: params
+                data: JSON.stringify(params) ,
+                headers: {
+                  'Content-Type': 'application/json'
+                }
             }).then(res=>{
                 console.log(res)
             })
