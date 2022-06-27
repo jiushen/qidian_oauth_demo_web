@@ -155,7 +155,7 @@ export default {
                         this.currentItem = res.data
                     }
                 }).catch((error) => {
-                    this.$message.error(error.message || "加载错误");
+                    // this.$message.error(error.message || "加载错误");
                 })
             }
             let type;
@@ -230,7 +230,7 @@ export default {
             request({
                 url: 'sendToC',
                 method: 'post',
-                data: JSON.stringify(params) ,
+                data: params ,
                 headers: {
                   'Content-Type': 'application/json'
                 }
