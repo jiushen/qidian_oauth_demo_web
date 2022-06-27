@@ -228,12 +228,10 @@ export default {
                 }
             }
             request({
+                contentType: "json",
                 url: 'sendToC',
                 method: 'post',
-                data: JSON.parse(JSON.stringify(params)) ,
-                headers: {
-                  'Content-Type': 'application/json'
-                }
+                params
             }).then(res=>{
                 console.log(res)
             })
