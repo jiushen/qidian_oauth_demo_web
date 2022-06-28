@@ -57,7 +57,8 @@
         maxPage: 1,    // 总共多少页
         count: 5,
         uid: 1,
-        bid:1
+        bid:1,
+        token:''
         
       }
     },
@@ -141,6 +142,7 @@
           })            
 
           let params = {
+              access_token: this.token,
               fromuser: this.bid,
               touser: this.uid,
               msgtype: "news",
@@ -149,14 +151,25 @@
               }
           }
           request({
-              contentType: "json",
-              url: 'sendToC',
-              method: 'post',
-              params
+                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
+                method: 'post',
+                params
             }).then(res=>{
-              console.log(res,"res")
+              console.log(res,"res=============")
+              if(res.errcode === 0){
+                  console.log("成功")
+              }
             })
-          }
+        },
+        handleToken(){
+            request({
+              url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
+              method: 'post'
+            }).then(res=>{
+                this.token = res.access_token
+                console.log(res,"bi-------------------")
+            })
+        }
     },
     created() {
         jsApi.fetchjsApi();
@@ -171,6 +184,7 @@
             console.log(id,"bid===============")
             this.bid = id
         });
+        this.handleToken()
 
     },
   }

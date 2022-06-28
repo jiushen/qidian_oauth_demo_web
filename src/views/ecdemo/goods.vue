@@ -88,7 +88,8 @@ export default {
             pageTotal: 0,//总条数
             num: 0,
             uid:1,
-            bid:1
+            bid:1,
+            token:''
 
         }
     },
@@ -119,6 +120,7 @@ export default {
             console.log(id,"bid===============")
             this.bid = id
         });
+        this.handleToken()
     },
     methods: {
         selectorChange(val){
@@ -220,6 +222,7 @@ export default {
             }
             arr.push(obj)
             let params={
+                access_token: this.token,
                 fromuser: this.bid,
                 touser: this.uid,
                 msgtype: "news",
@@ -228,18 +231,29 @@ export default {
                 }
             }
             request({
-                contentType: "json",
-                url: 'sendToC',
+                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
                 method: 'post',
                 params
             }).then(res=>{
-                console.log(res)
+              console.log(res)
+              if(res.errcode === 0){
+                  console.log("成功")
+              }
             })
 
         },
         changePages(value){
             this.pageNum = value
             this.fetchGoodsList()   
+        },
+        handleToken(){
+            request({
+              url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
+              method: 'post'
+            }).then(res=>{
+                this.token = res.access_token
+                console.log(res,"bi-------------------")
+            })
         }
 
     }
