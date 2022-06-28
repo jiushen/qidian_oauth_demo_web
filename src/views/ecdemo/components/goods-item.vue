@@ -1,31 +1,35 @@
 <template>
-    <div class="goods-item" v-infinite-scroll="load"
-        infinite-scroll-disabled="disabled">
-        <el-checkbox-group v-model="checkedList" class="checkedItem" :max="1">
-        <div v-for="(item,index) in list" :key="index" @click="checkGoods(item)"
-                class="goods-item-content" :class="selected === item.id ? 'selected' : ''"  >
-            <el-checkbox :label="item.id"></el-checkbox>
-            <el-image v-if="item.resources && item.resources.img" class="picture" :src="item.resources.img"></el-image>
-            <el-image v-else class="picture">
-                <div slot="error" class="image-slot">
-                    <i class="el-icon-picture-outline"></i>
+    <div>
+        <div class="goods-item" v-infinite-scroll="load"
+            infinite-scroll-disabled="disabled">
+            <el-checkbox-group v-model="checkedList" class="checkedItem" :max="1">
+            <div v-for="(item,index) in list" :key="index" @click="checkGoods(item)"
+                    class="goods-item-content" :class="selected === item.id ? 'selected' : ''"  >
+                <el-checkbox :label="item.id"></el-checkbox>
+                <el-image v-if="item.resources && item.resources.img" class="picture" :src="item.resources.img"></el-image>
+                <el-image v-else class="picture">
+                    <div slot="error" class="image-slot">
+                        <i class="el-icon-picture-outline"></i>
+                    </div>
+                </el-image>
+                <div class="content-wrap">
+                    <p class="content-title">{{item.name}}
+                    </p>
+                    <span class="content-price">¥{{item.price || item.order_price}}</span>
+                    <div class="content-bottom">
+                        <span>库存:{{item.inventory_show}}</span>
+                        <span class="content-sales">销量:{{item.sales}}</span>
+                    </div>
                 </div>
-            </el-image>
-            <div class="content-wrap">
-                <p class="content-title">{{item.name}}
-                </p>
-                <span class="content-price">¥{{item.price || item.order_price}}</span>
-                <div class="content-bottom">
-                    <span>库存:{{item.inventory_show}}</span>
-                    <span class="content-sales">销量:{{item.sales}}</span>
-                </div>
-            </div>
-        </div> 
-        </el-checkbox-group>
-        <p v-if="rollLoading && list.length>10" class="loadingTip">列表加载中...</p>
-        <!-- <p v-if="noMore" class="loadingTip">没有更多了</p> -->
+            </div> 
+            </el-checkbox-group>
+            <p v-if="rollLoading && list.length>10" class="loadingTip">列表加载中...</p>
+            <!-- <p v-if="noMore" class="loadingTip">没有更多了</p> -->
 
+        </div>
+        <div class="goods-no-data" v-show="list.length===0 && !rollLoading">暂无数据</div>
     </div>
+
 </template>
 
 <script>
@@ -233,5 +237,12 @@ export default {
       color: #A1ABC2;
       line-height: 18px;
     }
+}
+.goods-no-data{
+    color: #A1ABC2;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 20px;
 }
 </style>

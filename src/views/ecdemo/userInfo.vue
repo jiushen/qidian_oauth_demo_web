@@ -113,7 +113,7 @@ export default {
                     color: rgba(138,147,169,1);
                 }
                 .ship-name{
-                    width:12%;
+                    width:15%;
                     min-width:52px;
                     margin-right:5px;
                 }

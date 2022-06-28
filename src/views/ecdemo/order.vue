@@ -36,7 +36,8 @@
                 </div>
             </div>
         </div>
-      <p v-show="loading" class="loading">列表加载中...</p>
+        <div class="order-no-data" v-show="listData.length===0 && !loading">暂无数据</div>
+        <p v-show="loading" class="loading">列表加载中...</p>
     </div>
 </template>
 
