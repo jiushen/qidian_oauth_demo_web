@@ -217,7 +217,7 @@ export default {
                 title: this.itemObj.name ,
                 picurl: this.itemObj.resources.img,
                 url: "",
-                description: ""
+                description: "描述"
             }
             arr.push(obj)
             let params={
@@ -228,32 +228,20 @@ export default {
                   articles:arr
                 }
             }
-            let url=`sendMsgToC?msg=${encodeURIComponent(JSON.stringify(params))}`
+            let url=`sendMsgToC?msg=${encodeURI(JSON.stringify(params))}`
 
             request({
                 url: url,
                 method: 'post'
             }).then(res=>{
                 console.log(res)
-                if(res.errcode === 0){
-                    console.log("成功")
-                }
             })
 
         },
         changePages(value){
             this.pageNum = value
             this.fetchGoodsList()   
-        },
-        // handleToken(){
-        //     request({
-        //       url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
-        //       method: 'post'
-        //     }).then(res=>{
-        //         this.token = res.access_token
-        //         console.log(res,"bi-------------------")
-        //     })
-        // }
+        }
 
     }
 }

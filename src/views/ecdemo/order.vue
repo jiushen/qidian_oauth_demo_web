@@ -80,18 +80,7 @@
     methods: {
         // 初始化数据
         initData() {
-          // if (this.currentPage > this.maxPage) {
-          //   return false;
-          // }
           this.loading = true;
-          // let params={
-          //     limit: this.count,
-          //     page: this.currentPage,
-          //     index: 0,
-          //     sort: '-created_at',
-          //     uid: this.uid,
-          //     keywords:this.keyWords
-          // }
           orderList(this.queryParams).then(res => {
               if(res.message !== null){
                   this.loading = false;
@@ -136,7 +125,7 @@
                   title: i.name,
                   picurl: i.img,
                   url: "",
-                  description: ""
+                  description: "描述"
               }
               arr.push(arrObj)
           })            
@@ -149,27 +138,15 @@
                 articles: arr
               }
           }
-          let url=`sendMsgToC?msg=${encodeURIComponent(JSON.stringify(params))}`
+          let url=`sendMsgToC?msg=${encodeURI(JSON.stringify(params))}`
 
           request({
             url: url,
             method: 'post'
           }).then(res=>{
               console.log(res,"res=============")
-              if(res.errcode === 0){
-                  console.log("成功")
-              }
           })
-        },
-        // handleToken(){
-        //     request({
-        //       url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
-        //       method: 'post'
-        //     }).then(res=>{
-        //         this.token = res.access_token
-        //         console.log(res,"bi-------------------")
-        //     })
-        // }
+        }
     },
     created() {
         jsApi.fetchjsApi();
