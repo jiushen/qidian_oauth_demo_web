@@ -120,7 +120,6 @@ export default {
             console.log(id,"bid===============")
             this.bid = id
         });
-        this.handleToken()
     },
     methods: {
         selectorChange(val){
@@ -222,7 +221,6 @@ export default {
             }
             arr.push(obj)
             let params={
-                access_token: this.token,
                 fromuser: this.bid,
                 touser: this.uid,
                 msgtype: "news",
@@ -230,15 +228,16 @@ export default {
                   articles:arr
                 }
             }
+            let url=`sendMsgToC?msg=${encodeURIComponent(JSON.stringify(params))}`
+
             request({
-                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
-                method: 'post',
-                params
+                url: url,
+                method: 'post'
             }).then(res=>{
-              console.log(res)
-              if(res.errcode === 0){
-                  console.log("成功")
-              }
+                console.log(res)
+                if(res.errcode === 0){
+                    console.log("成功")
+                }
             })
 
         },
@@ -246,15 +245,15 @@ export default {
             this.pageNum = value
             this.fetchGoodsList()   
         },
-        handleToken(){
-            request({
-              url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
-              method: 'post'
-            }).then(res=>{
-                this.token = res.access_token
-                console.log(res,"bi-------------------")
-            })
-        }
+        // handleToken(){
+        //     request({
+        //       url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
+        //       method: 'post'
+        //     }).then(res=>{
+        //         this.token = res.access_token
+        //         console.log(res,"bi-------------------")
+        //     })
+        // }
 
     }
 }

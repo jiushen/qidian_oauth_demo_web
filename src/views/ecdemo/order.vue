@@ -142,7 +142,6 @@
           })            
 
           let params = {
-              access_token: this.token,
               fromuser: this.bid,
               touser: this.uid,
               msgtype: "news",
@@ -150,26 +149,27 @@
                 articles: arr
               }
           }
+          let url=`sendMsgToC?msg=${encodeURIComponent(JSON.stringify(params))}`
+
           request({
-                url: 'https://api.qidian.qq.com/cgi-bin/message/webim/sendToC',
-                method: 'post',
-                params
-            }).then(res=>{
+            url: url,
+            method: 'post'
+          }).then(res=>{
               console.log(res,"res=============")
               if(res.errcode === 0){
                   console.log("成功")
               }
-            })
+          })
         },
-        handleToken(){
-            request({
-              url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
-              method: 'post'
-            }).then(res=>{
-                this.token = res.access_token
-                console.log(res,"bi-------------------")
-            })
-        }
+        // handleToken(){
+        //     request({
+        //       url: 'https://api.qidian.qq.com/cgi-bin/token/getSelfBuildToken?appid=202248789&sid=1300001222&secret=S07029ebc92',
+        //       method: 'post'
+        //     }).then(res=>{
+        //         this.token = res.access_token
+        //         console.log(res,"bi-------------------")
+        //     })
+        // }
     },
     created() {
         jsApi.fetchjsApi();
@@ -184,7 +184,6 @@
             console.log(id,"bid===============")
             this.bid = id
         });
-        this.handleToken()
 
     },
   }
