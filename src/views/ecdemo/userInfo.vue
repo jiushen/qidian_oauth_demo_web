@@ -1,6 +1,6 @@
 <template>
     <div class="userInfo">
-        <div class="member-ship" v-loading="loading">
+        <div class="member-ship">
             <p class="member-ship-title">会员信息</p>
             <div class="member-ship-content">
                 <div class="member-ship-item">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">购买次数</div>
-                    <div>{{shipObj.buy_count? shipObj.buy_count:0}}</div>
+                    <div>{{shipObj.buy_count}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">最近购买</div>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">客单价</div>
-                    <div>¥{{shipObj.avr_order_price? shipObj.avr_order_price : 0}}</div>
+                    <div>¥{{shipObj.avr_order_price}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
@@ -114,7 +114,7 @@ export default {
                 }
                 .ship-name{
                     width:15%;
-                    min-width:52px;
+                    min-width:62px;
                     margin-right:5px;
                 }
                 
@@ -125,6 +125,8 @@ export default {
 
     }
 }
-
+.el-loading-spinner .path{
+    stroke: #409EFF !important;
+}
 
 </style>
