@@ -3,7 +3,7 @@
         <div class="goods-item" v-infinite-scroll="load"
             infinite-scroll-disabled="disabled">
             <el-checkbox-group v-model="checkedList" class="checkedItem" :max="1">
-            <div v-for="(item,index) in list" :key="index" @click="checkGoods(item)"
+            <div v-for="(item,index) in list" :key="index" @click="checkGoods(item,$event)"
                     class="goods-item-content" :class="selected === item.id ? 'selected' : ''"  >
                 <el-checkbox :label="item.id"></el-checkbox>
                 <el-image v-if="item.resources && item.resources.img" class="picture" :src="item.resources.img"></el-image>
@@ -125,10 +125,13 @@ export default {
     },
     methods: {
         //跳转到详情页
-        checkGoods(value){
+        checkGoods(value,e){
             this.selected = value.id
             let href= `http://dsshop.test:3002/product/detail/${this.selected}`
-            window.open(href, '_blank')
+            if(e.target.className !=='el-checkbox__inner' &&  e.target.className !== 'el-checkbox__original'){
+                window.open(href, '_blank')
+                console.log(e.target.className)
+            }
         },
         // 加载更多
         load () {
