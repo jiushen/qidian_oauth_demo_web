@@ -126,10 +126,9 @@ export default {
     methods: {
         //跳转到详情页
         checkGoods(value){
-          // this.selected = value.id
-          // let href= 
-        //  window.open(href, '_blank')
-
+            this.selected = value.id
+            let href= `http://dsshop.test:3002/product/detail/${this.selected}`
+            window.open(href, '_blank')
         },
         // 加载更多
         load () {
