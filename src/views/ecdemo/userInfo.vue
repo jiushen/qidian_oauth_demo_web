@@ -5,7 +5,7 @@
             <div class="member-ship-content">
                 <div class="member-ship-item">
                     <div class="information ship-name">会员名</div>
-                    <div>{{shipObj.nickname? shipObj.nickname : shipObj.name}}</div>
+                    <div v-if="isShipObj">{{shipObj.nickname? shipObj.nickname : shipObj.name}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">性别</div>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">购买次数</div>
-                    <div>{{shipObj.buy_count}}</div>
+                    <div v-if="isShipObj">{{shipObj.buy_count? shipObj.buy_count:0}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">最近购买</div>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">客单价</div>
-                    <div>¥{{shipObj.avr_order_price}}</div>
+                    <div v-if="isShipObj">¥{{shipObj.avr_order_price? shipObj.avr_order_price : 0}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
@@ -34,11 +34,11 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">邮箱地址</div>
-                    <div>{{shipObj.email? shipObj.email:'无'}}</div>
+                    <div v-if="isShipObj">{{shipObj.email? shipObj.email:'无'}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">优惠券</div>
-                    <div>{{shipObj.coupon_count? shipObj.coupon_count:0 }}张</div>
+                    <div v-if="isShipObj">{{shipObj.coupon_count? shipObj.coupon_count:0 }}张</div>
                 </div>
             </div>
 
@@ -60,6 +60,12 @@ export default {
             loading: true,
             uid:1
         }
+    },
+    computed:{
+      isShipObj() {
+        return Object.keys(this.shipObj).length === 0? false : true
+      }
+        
     },
     created() {
         jsApi.fetchjsApi();
@@ -125,8 +131,6 @@ export default {
 
     }
 }
-.el-loading-spinner .path{
-    stroke: #409EFF !important;
-}
+
 
 </style>
