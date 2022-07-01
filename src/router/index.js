@@ -13,17 +13,17 @@ const routes = [
   {
     path: '/userInfo',
     name: 'userInfo',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ecdemo/userInfo.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../pages/ecdemo/userInfo.vue')
   },
   {
     path: '/goods',
     name: 'goods',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ecdemo/goods.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../pages/ecdemo/goods.vue')
   },
   {
     path: '/order',
     name: 'order',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ecdemo/order.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../pages/ecdemo/order.vue')
   },
   {
     path: '/about',
