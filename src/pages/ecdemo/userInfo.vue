@@ -5,19 +5,19 @@
             <div class="member-ship-content">
                 <div class="member-ship-item">
                     <div class="information ship-name">会员名</div>
-                    <div v-if="isShipObj">{{shipObj.nickname? shipObj.nickname : shipObj.name}}</div>
+                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].nickname? shipObj.data[0].nickname : shipObj.data[0].name}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">性别</div>
-                    <div>{{shipObj.gender_show}}</div>
+                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].gender_show}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">购买次数</div>
-                    <div v-if="isShipObj">{{shipObj.buy_count? shipObj.buy_count:0}}</div>
+                    <div>{{shipObj.buy_count}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">最近购买</div>
-                    <div>{{shipObj.buy_lastes}}</div>
+                    <div>{{shipObj.buy_last_time}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">客单价</div>
@@ -25,16 +25,16 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
-                    <div>{{shipObj.created_at}}</div>
+                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].created_at}}</div>
                 </div>
 
                 <div class="member-ship-item">
                     <div class="information ship-name">状态</div>
-                    <div>{{shipObj.state_show}}</div>
+                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].state_show}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">邮箱地址</div>
-                    <div v-if="isShipObj">{{shipObj.email? shipObj.email:'无'}}</div>
+                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].email? shipObj.email:'无'}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">优惠券</div>
@@ -81,7 +81,7 @@ export default {
                 uid:id
             }
             openapi(params).then(res => {
-                this.shipObj = res.data[0] || {};
+                this.shipObj = res || {};
                 this.loading = false
             }).catch((error) => {
                 this.loading = false
