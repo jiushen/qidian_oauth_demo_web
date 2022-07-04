@@ -216,7 +216,7 @@ export default {
             let obj = {
                 title: this.itemObj.name ,
                 picurl: this.itemObj.resources.img,
-                url: "",
+                url: `http://dsshop.test:3002/product/detail/${value.checked[0]}`,
                 description: "描述"
             }
             arr.push(obj)

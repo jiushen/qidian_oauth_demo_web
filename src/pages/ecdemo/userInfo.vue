@@ -21,7 +21,7 @@
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">客单价</div>
-                    <div v-if="isShipObj">¥{{shipObj.avr_order_price? shipObj.avr_order_price : 0}}</div>
+                    <div v-if="isShipObj">¥{{shipObj.avr_order_price? parseFloat(shipObj.avr_order_price).toFixed(2) : 0}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">注册时间</div>
@@ -31,10 +31,6 @@
                 <div class="member-ship-item">
                     <div class="information ship-name">状态</div>
                     <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].state_show}}</div>
-                </div>
-                <div class="member-ship-item">
-                    <div class="information ship-name">邮箱地址</div>
-                    <div v-if="shipObj.data && shipObj.data[0]">{{shipObj.data[0].email? shipObj.email:'无'}}</div>
                 </div>
                 <div class="member-ship-item">
                     <div class="information ship-name">优惠券</div>

@@ -125,7 +125,7 @@
               let arrObj = {
                   title: i.name,
                   picurl: i.img,
-                  url: "",
+                  url: `http://dsshop.test:3002/product/detail/${i.good_id}`,
                   description: "描述"
               }
               arr.push(arrObj)
