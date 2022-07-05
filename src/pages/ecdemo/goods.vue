@@ -159,22 +159,25 @@ export default {
                     // this.$message.error(error.message || "加载错误");
                 })
             }
-            let type;
+            let type,sort;
             if(this.selectedSelector === 1){
                 type = 'history'
+                sort = '-created_at'
             }
             if(this.selectedSelector === 2){
                 type = 'recommend'
+                sort = 'created_at'
             }
             if(this.selectedSelector === 3){
                 type = ''
+                sort = '-created_at'
             }
             let params={
                 limit: this.pageSize,
                 page: this.pageNum,
                 keywords: this.keyWords,
                 uid: this.uid,
-                sort: '-created_at',
+                sort: sort,
                 type: type,
                 index: 0
             }
