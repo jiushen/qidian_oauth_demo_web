@@ -64,6 +64,7 @@ export default {
         
     },
     created() {
+        console.log("重新进入----------------------")
         jsApi.fetchjsApi();
     },
     mounted() {

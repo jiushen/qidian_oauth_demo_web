@@ -81,6 +81,9 @@
     methods: {
         // 初始化数据
         initData() {
+          if(this.currentPage === 1){
+              this.listData = []
+          }
           this.loading = true;
           orderList(this.queryParams).then(res => {
               if(res.message !== null){
@@ -100,11 +103,11 @@
           })
         },
         loadList() {
-            this.currentPage ++;
-            if (this.currentPage > this.maxPage) {
-                return 
+            console.log(this.currentPage ,this.maxPage,'1111')
+            if (this.currentPage < this.maxPage) {
+                this.currentPage ++;
+                this.initData()
             }
-            this.initData()
 
         },
         fetchOrders(){
@@ -150,6 +153,7 @@
         }
     },
     created() {
+        console.log("重新进入----------------------")
         jsApi.fetchjsApi();
     },
     mounted() {
