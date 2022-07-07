@@ -54,7 +54,8 @@ export default {
         return {
             shipObj:{},
             loading: true,
-            uid:1
+            uid:1,
+            timer:null
         }
     },
     computed:{
@@ -65,13 +66,18 @@ export default {
     },
     created() {
         console.log("重新进入----------------------")
-        jsApi.fetchjsApi();
+        this.setTimer();
     },
     mounted() {
         eventBus.$on('cid', (id) => {
             this.fetchUser(id);
         })
     },
+    // 最后在beforeDestroy()生命周期内清除定时器：
+		beforeDestroy() {
+		    this.clearTimer()      
+		    this.timer = null;
+		},
     methods: {
         fetchUser(id){
             let params = {
@@ -85,6 +91,15 @@ export default {
                 this.$message.error(error.message || "加载错误");
             })
 
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        setTimer() {
+            this.timer = setTimeout(() => {
+                jsApi.fetchjsApi();
+                this.clearTimer()
+            }, 100);
         }
     }
 }
