@@ -3,6 +3,7 @@ export default {
     fetchjsApi(){
         let id = 0
         var eventName = 'AIOCreate'; 
+        var eventNames = 'AIOActivate'; 
         var handler = function (result) {
             let code = result.code,
                 msg = result.msg,
@@ -15,6 +16,16 @@ export default {
          qidian.registerEvent(
           {
           eventName: eventName,
+          // Channel:0,
+          listener: handler,
+          fail: function (error) {
+              var code = error.code,
+                  msg = error.msg; 
+          }
+        })
+        qidian.registerEvent(
+          {
+          eventName: eventNames,
           // Channel:0,
           listener: handler,
           fail: function (error) {
