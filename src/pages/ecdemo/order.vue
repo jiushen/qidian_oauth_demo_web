@@ -9,7 +9,6 @@
             v-infinite-scroll="loadList"
             infinite-scroll-disabled="disabled"
             v-for="(item, index) in listData" :key="index"
-            @click="handleEdit(item.id)"
         >
             <div class="status">{{item.state_show}}</div>
             <div class="fix goods">
@@ -27,11 +26,9 @@
                     <div class="money">¥{{item.total}}</div>
                     <div class="operation">
                         <span>共{{item.goods_list.length}}件</span>
-                        <!-- <el-tooltip class="item" effect="light" content="直接发送" placement="bottom-start"> -->
-                            <a href="javascript:void(0)" @click="sendData(item)">
-                              <img src="./assets/icons/normal.png"/>
-                            </a>
-                        <!-- </el-tooltip> -->
+                        <a href="javascript:void(0)" @click="sendData(item)">
+                          <img src="./assets/icons/normal.png"/>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -48,7 +45,6 @@
   import request from '@/plugins/request'
   export default {
     name: 'ecsettingOrder',
-    // components: { TabFilter },
     data() {
       return {
         keyWords: '',
@@ -59,8 +55,8 @@
         count: 5,
         uid: 1,
         bid:1,
-        token:''
-        
+        token:'',
+        timer:null
       }
     },
     computed: {
@@ -108,18 +104,12 @@
                 this.currentPage ++;
                 this.initData()
             }
-
         },
         fetchOrders(){
             this.currentPage = 1
             this.listData = []
             this.initData()
         },
-        // 跳转详情
-        handleEdit(id) {
-          console.log('id', id);
-        },
-
         // 发送
         sendData(value) {
           console.log('value', value); 
@@ -150,11 +140,20 @@
           }).then(res=>{
               console.log(res,"res=============")
           })
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        setTimer() {
+            this.timer = setTimeout(() => {
+                jsApi.fetchjsApi();
+                this.clearTimer()
+            }, 100);
         }
     },
     created() {
         console.log("重新进入----------------------")
-        jsApi.fetchjsApi();
+        this.setTimer();
     },
     mounted() {
         eventBus.$on('cid', (id) => {
@@ -168,6 +167,11 @@
         });
 
     },
+    // 最后在beforeDestroy()生命周期内清除定时器：
+		beforeDestroy() {
+		    this.clearTimer()      
+		    this.timer = null;
+		}
   }
 </script>
 

@@ -24,8 +24,6 @@
             </div> 
             </el-checkbox-group>
             <p v-if="rollLoading && list.length>10" class="loadingTip">列表加载中...</p>
-            <!-- <p v-if="noMore" class="loadingTip">没有更多了</p> -->
-
         </div>
         <div class="goods-no-data" v-show="list.length===0 && !rollLoading">暂无数据</div>
     </div>
@@ -130,7 +128,6 @@ export default {
             let href= `http://dsshop.test:3002/product/detail/${this.selected}`
             if(e.target.className !=='el-checkbox__inner' &&  e.target.className !== 'el-checkbox__original'){
                 window.open(href, '_blank')
-                console.log(e.target.className)
             }
         },
         // 加载更多

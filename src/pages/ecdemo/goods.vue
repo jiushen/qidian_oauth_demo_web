@@ -89,7 +89,6 @@ export default {
             num: 0,
             uid:1,
             bid:1,
-            token:'',
             timer:null
 
         }
@@ -158,7 +157,7 @@ export default {
                         this.currentItem = res.data
                     }
                 }).catch((error) => {
-                    // this.$message.error(error.message || "加载错误");
+                    this.$message.error(error.message || "加载错误");
                 })
             }
             let type,sort;
