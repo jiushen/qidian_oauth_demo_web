@@ -1,4 +1,7 @@
-# qidian_oauth_demo_web 创建步骤
+# 项目启动和部署演示
+项目框架：vue, ui：element-ui
+
+#部署步骤：
 # 安装依赖
 $ npm install
 
