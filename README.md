@@ -1,13 +1,12 @@
 # qidian_oauth_demo_web 创建步骤
-# install dependencies
+# 安装依赖
 $ npm install
 
-# serve with hot reload at localhost:8080
+# 本地启动服务
 $ npm run dev
 
-# build for production and launch server
+# 为生产和启动服务器构建
 $ npm run build
 $ npm run start
 
-# generate static project
-$ npm run generate
+
