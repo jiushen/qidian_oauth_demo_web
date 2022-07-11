@@ -12,10 +12,11 @@ service.interceptors.request.use(
         config.url = config.url
     }
     else{
-        config.url = '/api/v1/app/' + config.url;
+        config.url = '/proxyApi/api/v1/app/' + config.url;
     }
     config.headers['apply-secret'] = process.env.PROJECT_KEY
     config.headers['Accept'] = 'application/json'
+    // esponse.AddHeader("Connection","close")
     // config.headers['Authorization'] = getToken('token_type') + ' ' + getToken('token')
     return config
   },
@@ -28,6 +29,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
+    console.log(response,"aa")
     if (response.data.result === 'error') {
       Message({
         message: '服务器返回格式有误',
@@ -51,7 +53,7 @@ service.interceptors.response.use(
     // console.log('err' + error) // for debug
     console.log('error.response.data', error.response.data)
     if (error.response.data.status_code === 500  && (error.response.data.message.indexOf('The refresh token is invalid') !== -1 || error.response.data.message.indexOf('Unauthenticated') !== -1)) {
-      $nuxt.$store.commit('logout')
+      // $nuxt.$store.commit('logout')
       location.reload()
     } else {
       Message({

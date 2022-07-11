@@ -1,25 +1,20 @@
 const { defineConfig } = require('@vue/cli-service')
+//本地访问域名: http://localhost:8080/
 
 module.exports = {
-  devServer: {
-    // server: {
-    //   port: 3005, // default: 3000
-    //   // host: '0.0.0.0', // 本地需要测试pwa的话，改成localhost,
-    //   host: 'localhost',
-    // },
-    // axios: {
-    //   proxy: true, // 表示开启代理
-    //   prefix: '/proxyApi', // 表示给请求url加个前缀 /api
-    //   credentials: true // 表示跨域请求时是否需要使用凭证
-    //  },
-    proxy: {
-      '/api': {
-        target: 'http://114.132.223.235:8082/',
-        pathRewrite: {
-          '^/api': '/', // 把 /api 替换成 /
-          changeOrigin: true // 表示是否跨域
-         } 
-      },
+      devServer: {
+        open: true,
+        host: 'localhost',
+        port: '8080',
+        https: false,
+        hotOnly: false,
+        proxy: {
+            '/proxyApi': {
+                target: 'https://114.132.223.235:8082/',
+                pathRewrite: {'^/proxyApi': ''}, // 下面这个配置的作用是, 把`/api/api地址`转发给服务器的只有`api地址`, 去掉`/api`
+                // ws: true, //  websocket 用于支持websocket,不写也默认true
+                changeOrigin: true, //不写也默认true,用于控制请求头中的host值
+            }
+        }
     }
-  }
 }
