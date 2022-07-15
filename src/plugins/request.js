@@ -13,6 +13,7 @@ service.interceptors.request.use(
     }
     else{
         config.url = '/proxyApi/api/v1/app/' + config.url;
+        // config.url = '/api/v1/app/' + config.url;
     }
     config.headers['apply-secret'] = process.env.PROJECT_KEY
     config.headers['Accept'] = 'application/json'

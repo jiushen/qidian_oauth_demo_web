@@ -7,7 +7,6 @@ module.exports = {
         host: 'localhost',
         port: '8080',
         https: false,
-        hotOnly: false,
         proxy: {
             '/proxyApi': {
                 target: 'https://114.132.223.235:8082/',
