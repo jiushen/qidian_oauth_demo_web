@@ -48,7 +48,6 @@
                 </div>
             </div>
             <el-footer class="footer">
-                <!-- <span>已选({{Number}})</span> -->
                 <el-button type="primary" :disabled="!goodsIds.length" size="small" class="button-send" @click="send(goodsIds)">发送</el-button>
             </el-footer>
         </div>
@@ -129,7 +128,6 @@ export default {
             this.pageNum = 1
             this.goodsIds.checkedList = []
             this.goodsIds.checked = []
-            this.fetchGoodsList()
         },
         iconChange(){
             this.iconShow = !this.iconShow
