@@ -79,8 +79,12 @@ export default {
                 uid:id
             }
             openapi(params).then(res => {
-                this.shipObj = res || {};
-                this.loading = false
+              if(res.message !== null){
+                  this.shipObj = res || {};
+                  this.loading = false
+              }else{
+                  this.$message.error("接口错误");
+              }
             }).catch((error) => {
                 this.loading = false
                 this.$message.error(error.message || "加载错误");

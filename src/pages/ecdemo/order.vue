@@ -92,6 +92,8 @@
                   else {
                       this.listData = arr;
                   }
+              }else{
+                  this.$message.error("接口错误");
               }
           }).catch((err) => {
               this.loading = false

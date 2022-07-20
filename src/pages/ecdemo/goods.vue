@@ -153,6 +153,8 @@ export default {
                 getConsultList(params).then(res => {
                     if(res.message!== null){
                         this.currentItem = res.data
+                    }else{
+                        this.$message.error("接口错误");
                     }
                 }).catch((error) => {
                     this.$message.error(error.message || "加载错误");
@@ -186,6 +188,9 @@ export default {
                     this.list = this.handleArray(this.list)
                     this.pageTotal = res.total
                     this.num = Math.ceil(this.pageTotal / this.pageSize)
+                }
+                else{
+                    this.$message.error("接口错误");
                 }
             }).catch((error) => {
                 this.$message.error(error.message || "加载错误");
