@@ -14,7 +14,7 @@ $ npm run start
 # 新功能开发
 - 请使用 `feature/{功能名称}` 来命名你的分支
 # 与商城、企点工作台联动部分
-1. 进入商城http://dsshop.test:3002/（配置host 114.132.159.89	dsshop.test）
+1. 进入商城http://dsshop.test:3002/  （配置host 114.132.159.89	dsshop.test）
 2. 商品详情页点击在线咨询按钮，跳转到鉴权页进行认证。
 3. 认证成功后跳转到在线咨询对话页，此时等待企点客服接入。
 4. 登录客户端企点工作台端，提示客户已接入。
@@ -22,8 +22,8 @@ $ npm run start
 6. 工作台右侧商品信息中点击任一商品，跳转回商城的商品详情中。
 
 # demo相关功能说明
-1. 工作台JsApi方法的相关引用.（将单页面嵌入工作台前，需要对接jsapi事件，通过监听事件获取访客id。
-  相关文档请查看https://api.qidian.qq.com/wiki/doc/open/em38kp0alvrxdpevsk2g）
+1. 工作台JsApi方法的相关引用：将单页面嵌入工作台前，需要对接jsapi事件，通过监听事件获取访客id。
+  相关文档请查看https://api.qidian.qq.com/wiki/doc/open/em38kp0alvrxdpevsk2g。
 
           fetchjsApi(){
               var id = 0;
