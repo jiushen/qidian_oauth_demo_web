@@ -23,7 +23,7 @@ $ npm run start
 
 # demo相关功能说明
 1. 工作台JsApi方法的相关引用：将单页面嵌入工作台前，需要对接jsapi事件，通过监听事件获取访客id。
-  相关文档请查看https://api.qidian.qq.com/wiki/doc/open/em38kp0alvrxdpevsk2g。
+  相关文档请查看https://api.qidian.qq.com/wiki/doc/open/em38kp0alvrxdpevsk2g
 
           fetchjsApi(){
               var id = 0;
@@ -62,7 +62,7 @@ $ npm run start
               });
 
           }
-2. 商品信息和订单信息中发送消息功能，需调用发送webim信息接口，相关接口文档请查看https://api.qidian.qq.com/wiki/doc/open/em0ak81sklckg912oh1m。
+2. 商品信息和订单信息中发送消息功能，需调用发送webim信息接口，相关接口文档请查看https://api.qidian.qq.com/wiki/doc/open/em0ak81sklckg912oh1m
 
 
           let arr = [];
