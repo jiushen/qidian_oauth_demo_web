@@ -22,7 +22,7 @@ $ npm run start
 6. 工作台右侧商品信息中点击任一商品，跳转回商城的商品详情中。
 
 # demo相关功能说明
-1. 工作台JsApi方法的相关引用：将单页面嵌入工作台前，需要对接jsapi事件，通过监听事件获取访客id。
+1. 工作台JsApi方法的相关引用：将单页面嵌入工作台前，需要对接jsapi事件。jsapi事件需要同时监控aiocreate和aioactivate两个事件，并获取访客id。
   相关文档请查看https://api.qidian.qq.com/wiki/doc/open/em38kp0alvrxdpevsk2g
 
           fetchjsApi(){
@@ -44,6 +44,16 @@ $ npm run start
                     var code = error.code,
                         msg = error.msg; 
                         console.log(code,msg);
+                }
+              });
+              qidian.registerEvent(
+                {
+                eventName: 'AIOActivate',
+                listener: handler,
+                fail: function (error) {
+                    var code = error.code,
+                        msg = error.msg; 
+                        console.log(code,msg,"AIOActivate");
                 }
               });
               return id;
