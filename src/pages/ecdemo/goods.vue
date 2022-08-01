@@ -108,7 +108,7 @@ export default {
     },
     created() {
         console.log("重新进入----------------------")
-        jsApi.fetchjsApi();
+        this.setTimer();
     },
     mounted() {
         eventBus.$on('cid', (id) => {
@@ -248,8 +248,23 @@ export default {
         changePages(value){
             this.pageNum = value
             this.fetchGoodsList()   
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        setTimer() {
+            this.timer = setTimeout(() => {
+                jsApi.fetchjsApi();
+                this.clearTimer()
+            }, 100);
         }
-    }
+
+    },
+    // 最后在beforeDestroy()生命周期内清除定时器：
+		beforeDestroy() {
+		    this.clearTimer()      
+		    this.timer = null;
+		}
 }
 </script>
 

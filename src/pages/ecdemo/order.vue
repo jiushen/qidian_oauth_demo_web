@@ -142,11 +142,22 @@
           }).then(res=>{
               console.log(res,"res=============")
           })
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        setTimer() {
+            this.timer = setTimeout(() => {
+                jsApi.fetchjsApi();
+                this.clearTimer()
+            }, 100);
         }
     },
     created() {
         console.log("重新进入----------------------")
-        jsApi.fetchjsApi();
+        this.setTimer();
+        // jsApi.fetchjsApi();
+        // this.initData();
     },
     mounted() {
         eventBus.$on('cid', (id) => {
@@ -159,7 +170,12 @@
             this.bid = id
         });
 
-    }
+    },
+    // 最后在beforeDestroy()生命周期内清除定时器：
+		beforeDestroy() {
+		    this.clearTimer()      
+		    this.timer = null;
+		}
   }
 </script>
 

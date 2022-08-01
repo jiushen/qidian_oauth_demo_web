@@ -66,7 +66,9 @@ export default {
     },
     created() {
         console.log("重新进入----------------------")
-        jsApi.fetchjsApi();
+        this.setTimer();
+        // jsApi.fetchjsApi();
+        // this.fetchUser();
     },
     mounted() {
         eventBus.$on('cid', (id) => {
@@ -89,9 +91,22 @@ export default {
                 this.loading = false
                 this.$message.error(error.message || "加载错误");
             })
-
+        },
+        clearTimer() {
+            clearTimeout(this.timer);
+        },
+        setTimer() {
+            this.timer = setTimeout(() => {
+                jsApi.fetchjsApi();
+                this.clearTimer()
+            }, 100);
         }
-    }
+    },
+    // 最后在beforeDestroy()生命周期内清除定时器：
+		beforeDestroy() {
+		    this.clearTimer()      
+		    this.timer = null;
+		},
 }
 </script>
 <style lang='scss' scoped>
